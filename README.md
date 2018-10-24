@@ -2,7 +2,7 @@
 This is the repository for the [Italian Agile Days 2018's workshop](https://www.agileday.it).
 The scope is to show a way to test events in a CQRS with event sourcing application.
 
-# This is the exercise *
+# This is the solution *
 
 ## Authors
 Alessandro Colla

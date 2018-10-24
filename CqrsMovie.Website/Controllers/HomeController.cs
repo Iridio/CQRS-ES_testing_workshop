@@ -9,6 +9,7 @@ using CqrsMovie.SharedKernel.Domain.Ids;
 using Microsoft.AspNetCore.Mvc;
 using CqrsMovie.Website.Models;
 using Microsoft.Extensions.Logging;
+using MongoDB.Bson.Serialization.Serializers;
 
 namespace CqrsMovie.Website.Controllers
 {
@@ -56,7 +57,17 @@ namespace CqrsMovie.Website.Controllers
     [HttpPost]
     public async Task<IActionResult> BookSeats()
     {
+      var aggregateId = "d0e9a129-3e3d-43d8-991a-3bb4c85e741e";
+      Guid.TryParse(aggregateId, out var aggregateGuid);
 
+      var seatsToBook = new List<Seat>
+      {
+          new Seat { Number = 1, Row = "B" },
+          new Seat { Number = 2, Row = "B" },
+          new Seat { Number = 3, Row = "B" }
+      };
+
+      await serviceBus.Send(new BookSeats(new DailyProgrammingId(aggregateGuid), seatsToBook));
 
       ViewData["Message"] = "BookSeats commands sent";
       return RedirectToAction("Index");
