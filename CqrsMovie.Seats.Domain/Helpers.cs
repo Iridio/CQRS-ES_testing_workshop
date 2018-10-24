@@ -16,5 +16,10 @@ namespace CqrsMovie.Seats.Domain
     {
       return entities.Select(x => new Messages.Dtos.Seat() { Row = x.Row, Number = x.Number }).ToList();
     }
+
+    public static Seat ToEntity(this Messages.Dtos.Seat seat, SeatState seatState)
+    {
+      return new Seat(seat.Row, seat.Number, seatState);
+    }
   }
 }

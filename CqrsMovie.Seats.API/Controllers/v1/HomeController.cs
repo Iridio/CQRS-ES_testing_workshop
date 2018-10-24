@@ -15,7 +15,7 @@ namespace CqrsMovie.Seats.API.Controllers.v1
       return View();
     }
 
-    public async Task<IActionResult> Get()
+    public IActionResult Get()
     {
       return Ok();
     }

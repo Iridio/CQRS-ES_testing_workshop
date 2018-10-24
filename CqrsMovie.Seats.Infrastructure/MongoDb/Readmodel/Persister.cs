@@ -17,7 +17,7 @@ namespace CqrsMovie.Seats.Infrastructure.MongoDb.Readmodel
       logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public async Task<T> GetBy<T>(Guid id) where T : Dto
+    public async Task<T> GetBy<T>(string id) where T : Dto
     {
       var type = typeof(T).Name;
       try
