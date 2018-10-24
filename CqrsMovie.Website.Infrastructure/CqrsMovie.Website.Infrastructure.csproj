@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MassTransit.Extensions.DependencyInjection" Version="5.1.5" />
+    <PackageReference Include="MassTransit.RabbitMQ" Version="5.1.5" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.1.1" />
+    <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CqrsMovie.Muflone.EventStore\CqrsMovie.Muflone.EventStore.csproj" />
+    <ProjectReference Include="..\CqrsMovie.ServiceBus\CqrsMovie.ServiceBus.csproj" />
+    <ProjectReference Include="..\CqrsMovie.SharedKernel\CqrsMovie.SharedKernel.csproj" />
+    <ProjectReference Include="..\CqrsMovie.Website.ReadModel\CqrsMovie.Website.ReadModel.csproj" />
+  </ItemGroup>
+
+</Project>
