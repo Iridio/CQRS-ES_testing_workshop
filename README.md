@@ -10,8 +10,8 @@ Alessandro Colla
 
 Alberto Acerbis
 * [Linkedin](https://www.linkedin.com/in/aacerbis/)
-* [GitHub](https://github.com/AlbertoAcerbis)
 * [Twitter](https://www.twitter.com/aacerbis)
+* [GitHub](https://github.com/AlbertoAcerbis)
 
 ## Prerequisites
 * [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/) or [Visual Studio Code](https://code.visualstudio.com/)
