@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CqrsMovie.Muflone.Messages.Events;
 using CqrsMovie.SharedKernel.ReadModel;
 using Microsoft.Extensions.Logging;
 using MongoDB.Driver;
@@ -18,12 +17,12 @@ namespace CqrsMovie.Website.Infrastructure.MongoDb.Readmodel
       logger = loggerFactory.CreateLogger(GetType());
     }
 
-    public async Task<T> GetBy<T>(Guid id) where T : Dto
+    public async Task<T> GetBy<T>(string id) where T : Dto
     {
       var type = typeof(T).Name;
       try
       {
-        var collection = database.GetCollection<T>(typeof(T).Name);
+        var collection = database.GetCollection<T>(type);
         var filter = Builders<T>.Filter.Eq("_id", id);
         return await collection.CountDocumentsAsync(filter) > 0 ? (await collection.FindAsync(filter)).First() : null;
       }

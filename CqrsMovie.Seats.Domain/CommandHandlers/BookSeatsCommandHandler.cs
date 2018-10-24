@@ -8,17 +8,26 @@ using Microsoft.Extensions.Logging;
 
 namespace CqrsMovie.Seats.Domain.CommandHandlers
 {
-    public class BookSeatsCommandHandler : CommandHandler<BookSeats>
+  public class BookSeatsCommandHandler : CommandHandler<BookSeats>
+  {
+    public BookSeatsCommandHandler(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
     {
-        public BookSeatsCommandHandler(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
-        {
-        }
-
-        public override async Task Handle(BookSeats command)
-        {
-            var entity = await Repository.GetById<DailyProgramming>(command.AggregateId.Value);
-            entity.BookSeats((DailyProgrammingId)command.AggregateId, command.Seats);
-            await Repository.Save(entity, Guid.NewGuid(), headers => { });
-        }
     }
+
+    public override async Task Handle(BookSeats command)
+    {
+      try
+      {
+        var entity = await Repository.GetById<DailyProgramming>(command.AggregateId.Value);
+        entity.BookSeats((DailyProgrammingId)entity.Id, command.Seats);
+        await Repository.Save(entity, Guid.NewGuid(), headers => { });
+      }
+      catch (Exception e)
+      {
+        Logger.LogError($"BookSeatsCommand: Error processing the command: {e.Message} - StackTrace: {e.StackTrace}");
+        throw;
+      }
+
+    }
+  }
 }
