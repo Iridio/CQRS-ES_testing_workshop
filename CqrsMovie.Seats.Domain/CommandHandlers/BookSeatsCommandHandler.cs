@@ -27,7 +27,6 @@ namespace CqrsMovie.Seats.Domain.CommandHandlers
         Logger.LogError($"BookSeatsCommand: Error processing the command: {e.Message} - StackTrace: {e.StackTrace}");
         throw;
       }
-
     }
   }
 }

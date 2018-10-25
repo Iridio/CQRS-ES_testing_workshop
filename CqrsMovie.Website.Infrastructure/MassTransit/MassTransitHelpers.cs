@@ -18,6 +18,7 @@ namespace CqrsMovie.Website.Infrastructure.MassTransit
       {
         x.AddConsumer<DailyProgrammingCreatedConsumer>();
         x.AddConsumer<SeatsBookedConsumer>();
+        x.AddConsumer<SeatsReservedConsumer>();
       });
 
       services.AddSingleton(provider => Bus.Factory.CreateUsingRabbitMq(cfg =>
