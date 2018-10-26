@@ -24,8 +24,8 @@ namespace CqrsMovie.Seats.Domain.CommandHandlers
             }
             catch (Exception e)
             {
-                Logger.LogError($"ReserveSeatsCommand: Error processing the command: {e.Message} - StackTrace: {e.StackTrace}");
-                throw;
+                Logger?.LogError($"ReserveSeatsCommand: Error processing the command: {e.Message} - StackTrace: {e.StackTrace}");
+                throw new Exception(e.Message);
             }
         }
     }
