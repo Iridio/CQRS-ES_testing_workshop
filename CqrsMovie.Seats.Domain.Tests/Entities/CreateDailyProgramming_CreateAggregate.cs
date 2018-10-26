@@ -7,8 +7,7 @@ using CqrsMovie.Muflone.Messages.Commands;
 using CqrsMovie.Muflone.Messages.Events;
 using CqrsMovie.Seats.Domain.CommandHandlers;
 using CqrsMovie.SharedKernel.Domain.Ids;
-using Microsoft.Extensions.Logging;
-using Moq;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace CqrsMovie.Seats.Domain.Tests.Entities
 {
@@ -21,12 +20,10 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
     private readonly string movieTitle = "rambo";
     private readonly string screenName = "screen 99";
     private readonly IEnumerable<Seat> seats;
-    private readonly Mock<ILoggerFactory> loggerFactory;
 
     public CreateDailyProgramming_CreateAggregate()
     {
       seats = new List<Seat>() { new Seat() { Number = 1, Row = "A" } };
-      loggerFactory = new Mock<ILoggerFactory>();
     }
 
     protected override IEnumerable<DomainEvent> Given()
@@ -41,7 +38,7 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
 
     protected override ICommandHandler<CreateDailyProgramming> OnHandler()
     {
-      return new CreateDailyProgrammingCommandHandler(Repository, loggerFactory.Object);
+      return new CreateDailyProgrammingCommandHandler(Repository, new NullLoggerFactory());
     }
 
     protected override IEnumerable<DomainEvent> Expect()

@@ -1,37 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using CqrsMovie.Messages.Commands.Seat;
 using CqrsMovie.Messages.Dtos;
 using CqrsMovie.Messages.Events.Seat;
+using CqrsMovie.Muflone.Messages.Commands;
 using CqrsMovie.Muflone.Messages.Events;
 using CqrsMovie.Seats.Domain.CommandHandlers;
 using CqrsMovie.SharedKernel.Domain.Ids;
-using Microsoft.Extensions.Logging;
-using Moq;
-using Xunit;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace CqrsMovie.Seats.Domain.Tests.Entities
 {
-    public class ReserveSeats_Fail
+  public class ReserveSeats_Fail : CommandSpecification<ReserveSeat>
+  {
+    private readonly DailyProgrammingId aggregateId = new DailyProgrammingId(Guid.NewGuid());
+    private readonly MovieId movieId = new MovieId(Guid.NewGuid());
+    private readonly ScreenId screenId = new ScreenId(Guid.NewGuid());
+    private readonly DateTime dailyDate = DateTime.Today;
+    private readonly string movieTitle = "rambo";
+    private readonly string screenName = "screen 99";
+    private readonly IEnumerable<Seat> seats;
+    private readonly IEnumerable<Seat> seatsToBook;
+    private readonly IEnumerable<Seat> seatsToReserve;
+    
+    public ReserveSeats_Fail()
     {
-        private readonly DailyProgrammingId aggregateId = new DailyProgrammingId(Guid.NewGuid());
-        private readonly MovieId movieId = new MovieId(Guid.NewGuid());
-        private readonly ScreenId screenId = new ScreenId(Guid.NewGuid());
-        private readonly DateTime dailyDate = DateTime.Today;
-        private readonly string movieTitle = "rambo";
-        private readonly string screenName = "screen 99";
-        private readonly IEnumerable<Seat> seats;
-
-        private readonly IEnumerable<Seat> seatsToBook;
-        private readonly IEnumerable<Seat> seatsToReserve;
-
-        private readonly Mock<ILoggerFactory> loggerFactory;
-        private readonly InMemoryEventRepository repository;
-
-        public ReserveSeats_Fail()
-        {
-            seats = new List<Seat>
+      seats = new List<Seat>
             {
                 new Seat { Number = 1, Row = "A" },
                 new Seat { Number = 2, Row = "A" },
@@ -43,42 +37,42 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
                 new Seat { Number = 4, Row = "B" }
             };
 
-            seatsToBook = new List<Seat>
+      seatsToBook = new List<Seat>
             {
                 new Seat { Number = 1, Row = "B" },
                 new Seat { Number = 2, Row = "B" },
                 new Seat { Number = 3, Row = "B" }
             };
 
-            seatsToReserve = new List<Seat>
+      seatsToReserve = new List<Seat>
             {
                 new Seat { Number = 1, Row = "C" },
                 new Seat { Number = 2, Row = "C" },
                 new Seat { Number = 3, Row = "C" }
             };
 
-            loggerFactory = new Mock<ILoggerFactory>();
-            repository = new InMemoryEventRepository();
-        }
-
-        [Fact]
-        public async Task Cannot_ReserveSeats_NotBooked()
-        {
-            var eventsSucceded = new List<DomainEvent>
-            {
-                new DailyProgrammingCreated(aggregateId, movieId, screenId, dailyDate, seats, movieTitle, screenName),
-                new SeatsBooked(aggregateId, seatsToBook)
-            };
-
-            repository.ApplyGivenEvents(eventsSucceded);
-
-            var reserveSeatsCommand = new ReserveSeat(aggregateId, seatsToReserve);
-            var reserveSeatsCommandHandler = new ReserveSeatCommandHandler(repository, loggerFactory.Object);
-
-            Exception ex = await Assert.ThrowsAnyAsync<Exception>(() =>
-                reserveSeatsCommandHandler.Handle(reserveSeatsCommand));
-
-            Assert.Equal("Timeout expired!", ex.Message);
-        }
+      ExpectedException = new Exception("Unable to reserve seats. Already taken");
     }
+
+    protected override IEnumerable<DomainEvent> Given()
+    {
+      yield return new DailyProgrammingCreated(aggregateId, movieId, screenId, dailyDate, seats, movieTitle, screenName);
+      yield return new SeatsBooked(aggregateId, seatsToBook);
+    }
+
+    protected override ReserveSeat When()
+    {
+      return new ReserveSeat(aggregateId, seatsToReserve);
+    }
+
+    protected override ICommandHandler<ReserveSeat> OnHandler()
+    {
+      return new ReserveSeatCommandHandler(Repository, new NullLoggerFactory()); 
+    }
+
+    protected override IEnumerable<DomainEvent> Expect()
+    {
+      return new List<DomainEvent>();
+    }
+  }
 }

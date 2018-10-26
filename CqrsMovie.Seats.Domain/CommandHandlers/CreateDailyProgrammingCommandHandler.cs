@@ -17,9 +17,16 @@ namespace CqrsMovie.Seats.Domain.CommandHandlers
 
     public override async Task Handle(CreateDailyProgramming command)
     {
-      //TODO: Awful solution. Find a better one
-      var entity = new DailyProgramming((DailyProgrammingId)command.AggregateId, command.MovieId, command.ScreenId, command.Date, command.Seats, command.MovieTitle, command.ScreenName);
-      await Repository.Save(entity, Guid.NewGuid(), headers => { });
+      try
+      {
+        var entity = new DailyProgramming((DailyProgrammingId)command.AggregateId, command.MovieId, command.ScreenId, command.Date, command.Seats, command.MovieTitle, command.ScreenName);
+        await Repository.Save(entity, Guid.NewGuid(), headers => { });
+      }
+      catch (Exception e)
+      {
+        Logger.LogError($"CreateDailyProgrammingCommand: Error processing the command: {e.Message} - StackTrace: {e.StackTrace}");
+        throw;
+      }
     }
   }
 }
