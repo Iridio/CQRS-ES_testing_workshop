@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CqrsMovie.Muflone.Messages.Events;
 using CqrsMovie.SharedKernel.ReadModel;
 using Microsoft.Extensions.Logging;
+using Muflone.Messages.Events;
 
 namespace CqrsMovie.Website.ReadModel.EventHandlers
 {

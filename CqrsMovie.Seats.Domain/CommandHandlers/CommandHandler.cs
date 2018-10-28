@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using CqrsMovie.Muflone.Core;
-using CqrsMovie.Muflone.Messages.Commands;
-using CqrsMovie.Muflone.Persistence;
 using Microsoft.Extensions.Logging;
+using Muflone.Core;
+using Muflone.Messages.Commands;
+using Muflone.Persistence;
 
 namespace CqrsMovie.Seats.Domain.CommandHandlers
 {

@@ -2,7 +2,7 @@
 
 namespace CqrsMovie.SharedKernel.ReadModel
 {
-  public abstract class Dto
+  public abstract class Dto : IEquatable<Dto>
   {
     public string Id { get; set; }
 

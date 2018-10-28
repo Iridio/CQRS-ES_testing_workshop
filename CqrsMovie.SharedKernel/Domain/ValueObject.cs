@@ -5,7 +5,7 @@ using System.Linq;
 namespace CqrsMovie.SharedKernel.Domain
 {
   //Taken from here: https://enterprisecraftsmanship.com/2017/08/28/value-object-a-better-implementation/
-  public abstract class ValueObject
+  public abstract class ValueObject : IEquatable<ValueObject>
   {
     /// <summary>
     /// The class overriding this just need to return:
@@ -22,14 +22,19 @@ namespace CqrsMovie.SharedKernel.Domain
     /// <returns>List of objects to compare</returns>
     protected abstract IEnumerable<object> GetEqualityComponents();
 
+    public bool Equals(ValueObject other)
+    {
+      if (other == null)
+        return false;
+      if (GetType() != other.GetType())
+        throw new ArgumentException($"Invalid comparison of Value Objects of different types: {GetType()} and {other.GetType()}");
+      var valueObject = (ValueObject)other;
+      return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
+    }
+
     public override bool Equals(object obj)
     {
-      if (obj == null)
-        return false;
-      if (GetType() != obj.GetType())
-        throw new ArgumentException($"Invalid comparison of Value Objects of different types: {GetType()} and {obj.GetType()}");
-      var valueObject = (ValueObject)obj;
-      return GetEqualityComponents().SequenceEqual(valueObject.GetEqualityComponents());
+      return Equals(obj as ValueObject);
     }
 
     public override int GetHashCode()

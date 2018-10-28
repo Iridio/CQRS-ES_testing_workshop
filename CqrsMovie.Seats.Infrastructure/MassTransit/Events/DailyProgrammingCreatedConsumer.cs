@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using CqrsMovie.Messages.Events.Seat;
-using CqrsMovie.Muflone.Messages.Events;
 using CqrsMovie.Seats.ReadModel.EventHandlers;
 using CqrsMovie.SharedKernel.ReadModel;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Muflone.Messages.Events;
 
 namespace CqrsMovie.Seats.Infrastructure.MassTransit.Events
 {
-  public class DailyProgrammingCreatedConsumer : DomainEventConsumerBase<DailyProgrammingCreated>
+  public class DailyProgrammingCreatedConsumer : DomainEventConsumer<DailyProgrammingCreated>
   {
     public DailyProgrammingCreatedConsumer(IPersister persister, ILoggerFactory loggerFactory) : base(persister, loggerFactory)
     {

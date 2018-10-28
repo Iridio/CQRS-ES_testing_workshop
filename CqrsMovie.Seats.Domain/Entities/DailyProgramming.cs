@@ -14,6 +14,12 @@ namespace CqrsMovie.Seats.Domain.Entities
     private DateTime date;
     private IList<Seat> seats;
 
+    //TODO: Implement user information (due to online shopping)
+    //private Guid userId;
+
+    protected DailyProgramming()
+    { }
+
     public DailyProgramming(DailyProgrammingId aggregateId, MovieId movieId, ScreenId screenId, DateTime date, IEnumerable<Messages.Dtos.Seat> freeSeats, string movieTitle, string screenName)
     {
       //Null checks etc. ....
@@ -30,9 +36,5 @@ namespace CqrsMovie.Seats.Domain.Entities
       date = @event.Date;
       seats = @event.Seats.ToEntity(SeatState.Free);
     }
-
-    //TODO: Implement user information (due to online shopping)
-    //private Guid userId;
-
   }
 }

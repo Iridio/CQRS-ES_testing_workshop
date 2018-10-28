@@ -1,11 +1,12 @@
-﻿using CqrsMovie.ServiceBus.MassTransit;
+﻿using CqrsMovie.Website.Infrastructure.MassTransit.Events;
 using CqrsMovie.Website.Infrastructure.MongoDb;
-using CqrsMovie.Website.Infrastructure.MassTransit;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Muflone.MassTransit.RabbitMQ;
+using Muflone.MassTransit.RabbitMQ.Dependecies;
 
 namespace CqrsMovie.Website
 {
@@ -25,7 +26,10 @@ namespace CqrsMovie.Website
       services.Configure<ServiceBusOptions>(Configuration.GetSection("MassTransit:RabbitMQ"));
       var serviceBusOptions = new ServiceBusOptions();
       Configuration.GetSection("MassTransit:RabbitMQ").Bind(serviceBusOptions);
-      services.AddMassTransitWithRabbitMQ(serviceBusOptions);
+      services.AddMufloneMassTransitWithRabbitMQ(serviceBusOptions, x =>
+      {
+        x.AddConsumer<DailyProgrammingCreatedConsumer>();
+      });
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -37,10 +41,7 @@ namespace CqrsMovie.Website
         app.UseExceptionHandler("/Home/Error");
 
       app.UseStaticFiles();
-      app.UseMvc(routes =>
-      {
-        routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-      });
+      app.UseMvc(routes => { routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}"); });
     }
   }
 }

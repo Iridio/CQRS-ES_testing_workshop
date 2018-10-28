@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using CqrsMovie.Messages.Commands.Seat;
-using CqrsMovie.Muflone.Messages.Commands;
-using CqrsMovie.Muflone.Persistence;
 using CqrsMovie.Seats.Domain.CommandHandlers;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Muflone.Messages.Commands;
+using Muflone.Persistence;
 
 namespace CqrsMovie.Seats.Infrastructure.MassTransit.Commands
 {
-  public class CreateDailyProgrammingConsumer : CommandConsumerBase<CreateDailyProgramming>
+  public class CreateDailyProgrammingConsumer : CommandConsumer<CreateDailyProgramming>
   {
     public CreateDailyProgrammingConsumer(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
     {

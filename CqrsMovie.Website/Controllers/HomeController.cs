@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using CqrsMovie.Messages.Commands.Seat;
 using CqrsMovie.Messages.Dtos;
-using CqrsMovie.ServiceBus;
 using CqrsMovie.SharedKernel.Domain.Ids;
 using Microsoft.AspNetCore.Mvc;
 using CqrsMovie.Website.Models;
 using Microsoft.Extensions.Logging;
+using Muflone;
 
 namespace CqrsMovie.Website.Controllers
 {
@@ -58,7 +58,7 @@ namespace CqrsMovie.Website.Controllers
     [HttpPost]
     public async Task<IActionResult> BookSeats()
     {
-      
+
       ViewData["Message"] = "BookSeats commands sent";
       return RedirectToAction("Index");
     }
@@ -66,6 +66,7 @@ namespace CqrsMovie.Website.Controllers
     [HttpPost]
     public async Task<IActionResult> ReserveSeats()
     {
+
 
       ViewData["Message"] = "ReserveSeats commands sent";
       return RedirectToAction("Index");
