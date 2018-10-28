@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using CqrsMovie.Muflone.Core;
-using CqrsMovie.Muflone.Messages.Commands;
+using Muflone.Core;
+using Muflone.Messages.Commands;
 
 namespace CqrsMovie.Messages.Commands.Seat
 {

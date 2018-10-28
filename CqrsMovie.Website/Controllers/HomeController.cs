@@ -4,11 +4,11 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using CqrsMovie.Messages.Commands.Seat;
 using CqrsMovie.Messages.Dtos;
-using CqrsMovie.ServiceBus;
 using CqrsMovie.SharedKernel.Domain.Ids;
 using Microsoft.AspNetCore.Mvc;
 using CqrsMovie.Website.Models;
 using Microsoft.Extensions.Logging;
+using Muflone;
 
 namespace CqrsMovie.Website.Controllers
 {

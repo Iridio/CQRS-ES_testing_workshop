@@ -1,5 +1,4 @@
 ﻿using CqrsMovie.Core.Enums;
-using CqrsMovie.Muflone.EventStore.Persistence;
 using CqrsMovie.Seats.Infrastructure.MongoDb.Readmodel;
 using CqrsMovie.SharedKernel.ReadModel;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using Muflone.Eventstore.Persistence;
 
 namespace CqrsMovie.Seats.Infrastructure.MongoDb
 {

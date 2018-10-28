@@ -1,14 +1,14 @@
 ﻿using System.Threading.Tasks;
 using CqrsMovie.Messages.Commands.Seat;
-using CqrsMovie.Muflone.Messages.Commands;
-using CqrsMovie.Muflone.Persistence;
 using CqrsMovie.Seats.Domain.CommandHandlers;
 using MassTransit;
 using Microsoft.Extensions.Logging;
+using Muflone.Messages.Commands;
+using Muflone.Persistence;
 
 namespace CqrsMovie.Seats.Infrastructure.MassTransit.Commands
 {
-  public class BookSeatsConsumer : CommandConsumerBase<BookSeats>
+  public class BookSeatsConsumer : CommandConsumer<BookSeats>
   {
     public BookSeatsConsumer(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
     {

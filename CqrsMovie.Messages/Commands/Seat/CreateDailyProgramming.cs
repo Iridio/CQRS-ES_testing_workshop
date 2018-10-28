@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using CqrsMovie.Muflone.Messages.Commands;
 using CqrsMovie.SharedKernel.Domain.Ids;
+using Muflone.Messages.Commands;
 
 namespace CqrsMovie.Messages.Commands.Seat
 {

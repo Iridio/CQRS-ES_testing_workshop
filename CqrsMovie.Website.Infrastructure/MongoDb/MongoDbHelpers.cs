@@ -1,5 +1,4 @@
 ﻿using CqrsMovie.Core.Enums;
-using CqrsMovie.Muflone.EventStore.Persistence;
 using CqrsMovie.SharedKernel.ReadModel;
 using CqrsMovie.Website.Infrastructure.MongoDb.Readmodel;
 using CqrsMovie.Website.ReadModel.Abstracts;
@@ -8,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using Muflone.Eventstore.Persistence;
 
 namespace CqrsMovie.Website.Infrastructure.MongoDb
 {
@@ -36,7 +36,7 @@ namespace CqrsMovie.Website.Infrastructure.MongoDb
       services.AddScoped<IPersister, Persister>();
       services.AddScoped<IDailyProgrammingQueries, DailyProgrammingQueries>();
       services.AddSingleton<IEventStorePositionRepository>(x => new EventStorePositionRepository(x.GetService<ILogger<EventStorePositionRepository>>(), connectionString));
-      
+
       return services; //Return services to allow method chaining
     }
   }

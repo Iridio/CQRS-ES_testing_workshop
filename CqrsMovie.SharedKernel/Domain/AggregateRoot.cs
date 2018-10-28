@@ -1,5 +1,5 @@
-﻿using CqrsMovie.Muflone;
-using CqrsMovie.Muflone.Core;
+﻿using Muflone;
+using Muflone.Core;
 
 namespace CqrsMovie.SharedKernel.Domain
 {

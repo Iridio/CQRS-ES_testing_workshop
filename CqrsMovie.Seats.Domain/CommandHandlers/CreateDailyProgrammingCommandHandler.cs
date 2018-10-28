@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using CqrsMovie.Messages.Commands.Seat;
-using CqrsMovie.Muflone.Persistence;
 using CqrsMovie.Seats.Domain.Entities;
 using CqrsMovie.SharedKernel.Domain.Ids;
 using Microsoft.Extensions.Logging;
+using Muflone.Persistence;
 
 namespace CqrsMovie.Seats.Domain.CommandHandlers
 {

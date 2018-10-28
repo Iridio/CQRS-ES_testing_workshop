@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using CqrsMovie.Messages.Commands.Seat;
 using CqrsMovie.Messages.Dtos;
 using CqrsMovie.Messages.Events.Seat;
-using CqrsMovie.Muflone.Messages.Commands;
-using CqrsMovie.Muflone.Messages.Events;
 using CqrsMovie.Seats.Domain.CommandHandlers;
 using CqrsMovie.SharedKernel.Domain.Ids;
 using Microsoft.Extensions.Logging.Abstractions;
+using Muflone.Messages.Commands;
+using Muflone.Messages.Events;
+using Muflone.SpecificationTests;
 
 namespace CqrsMovie.Seats.Domain.Tests.Entities
 {
