@@ -2,8 +2,7 @@
 This is the repository for the [Italian Agile Days 2018's workshop](https://www.agileday.it).
 The scope is to show a way to test events in a CQRS with event sourcing application.
 
-# This is the solution for the master branch *
-
+# This is the solution branch *
 
 ## Prerequisites
 * [Visual Studio 2017](https://visualstudio.microsoft.com/downloads/) or [Visual Studio Code](https://code.visualstudio.com/)
