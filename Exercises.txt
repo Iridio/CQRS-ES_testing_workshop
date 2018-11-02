@@ -1,4 +1,20 @@
 ----------------------------------------
+Linee guida
+----------------------------------------
+Riportiamo nn breve riassunto di quanto spiegato durante il workshop per aiutarti ad avere una lista dei passi da seguire:
+* l'applicazione lancia comandi per far scatenare le regole di business nel dominio
+* un CommandHandler risponde la comando, istanzia l'"aggregate root" interessato ed esegue i metodi necessari dell'aggregato
+* l'aggregate fa i suoi controlli ed chiama RaiseEvent per scatenare uno o più eventi come risultato.
+* nel tuo aggregato deve esserci il metodo void Apply(IlMioEvento @event) per rispondere all'evento e valorizzare le proprietà del dominio necessarie
+* un o più EventHandler rispondo all'evento emesso e aggiornano i loro readmodel
+Per quanto concerne la fase di test, hai a disposizione la classe CommandSpecification del pacchetto nuget Muflone.SpecificationTests che ti da già tutti i metodi base, quali:
+ Given()
+ When()
+ OnHandler()
+ Expect()
+
+
+----------------------------------------
 Esercizio 1 - Reserve Seat (50 minuti)
 ----------------------------------------
 Quando un utente del nostro sito inizia il processo di acquisto, il sistema blocca per 15 minuti i posti selezionati.
