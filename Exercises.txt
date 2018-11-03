@@ -1,12 +1,15 @@
 ----------------------------------------
 Linee guida
 ----------------------------------------
-Riportiamo nn breve riassunto di quanto spiegato durante il workshop per aiutarti ad avere una lista dei passi da seguire:
+Riportiamo un breve riassunto di quanto spiegato durante il workshop per aiutarti ad avere una lista dei passi da seguire:
 * l'applicazione lancia comandi per far scatenare le regole di business nel dominio
 * un CommandHandler risponde la comando, istanzia l'"aggregate root" interessato ed esegue i metodi necessari dell'aggregato
-* l'aggregate fa i suoi controlli ed chiama RaiseEvent per scatenare uno o più eventi come risultato.
+* l'aggregate fa i suoi controlli e chiama RaiseEvent per scatenare uno o più eventi come risultato.
 * nel tuo aggregato deve esserci il metodo void Apply(IlMioEvento @event) per rispondere all'evento e valorizzare le proprietà del dominio necessarie
-* un o più EventHandler rispondo all'evento emesso e aggiornano i loro readmodel
+* uno o più EventHandler rispondo all'evento emesso e aggiornano i loro readmodel
+
+Nella solution folder "shared" c'è il progetto CqrsMovie.Messages in cui vanno messi tutti i comandi ed eventi
+
 Per quanto concerne la fase di test, hai a disposizione la classe CommandSpecification del pacchetto nuget Muflone.SpecificationTests che ti da già tutti i metodi base, quali:
  Given()
  When()
@@ -23,13 +26,12 @@ Come spiegato, ricorda che i comandi sono imperativi, mentre gli eventi sono al 
 Ricorda inoltre, che il test parte da una lista di eventi (Given()) che rappresentano lo stato iniziale dell'aggregato, che è il comando (When() ed OnHandler()) a far scatenare il tutto ed, infine, 
 che devi specificare qual è o quali sono gli eventi che ci aspettiamo siano creati dall'aggregato.
 Si è deciso che l'aggregato espone la lista dei posti composti da numero, riga e stato. Lo stato non viene passato nel comando in quanto superfluo, è il comando stesso che ci dice cosa fare con 
-quei posti, pertanto lo stato sarà il nostro aggregato ad impostarlo, proprio come il comando che abbiamo visto insieme.
+quei posti, pertanto lo stato sarà il nostro aggregato ad impostarlo, proprio come nel comando che abbiamo visto insieme.
 
 Per incrociare i posti liberi con quelli occupati temporaneamente, puoi anche usare il comando Intersect di Linq oltre al classico for/foreach
     var seatsToCheck = seats.Intersect(seatsToReserve.ToEntity(SeatState.Free));
 
-La classe CommandSpecification espone già un repository con i suoi metodi collegati ad un event store in memoria, pertanto non dovrai fare nulla se non invocare Repository.GetById 
-all'interno del tuo test.
+La classe CommandSpecification espone già un repository con GetById collegato ad un event store in memoria, pertanto non dovrai fare nulla se non necessiti di estendere/mocakare le sue funzionalità.
 
 
 ----------------------------------------
