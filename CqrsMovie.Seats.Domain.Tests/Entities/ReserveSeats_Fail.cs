@@ -47,9 +47,9 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
 
       seatsToReserve = new List<Seat>
             {
-                new Seat { Number = 1, Row = "C" },
-                new Seat { Number = 2, Row = "C" },
-                new Seat { Number = 3, Row = "C" }
+                new Seat { Number = 1, Row = "B" },
+                new Seat { Number = 2, Row = "B" },
+                new Seat { Number = 3, Row = "B" }
             };
 
       ExpectedException = new Exception("Unable to reserve seats. Already taken");
@@ -58,6 +58,7 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
     protected override IEnumerable<DomainEvent> Given()
     {
       yield return new DailyProgrammingCreated(aggregateId, movieId, screenId, dailyDate, seats, movieTitle, screenName);
+      yield return new SeatsReserved(aggregateId, seatsToReserve);
       yield return new SeatsBooked(aggregateId, seatsToBook);
     }
 

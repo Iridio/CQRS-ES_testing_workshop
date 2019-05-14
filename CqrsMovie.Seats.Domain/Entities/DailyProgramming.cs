@@ -42,7 +42,7 @@ namespace CqrsMovie.Seats.Domain.Entities
     internal void BookSeats(DailyProgrammingId aggregateId, IEnumerable<Messages.Dtos.Seat> seatsToBook)
     {
       // Chk for seats availability
-      var seatsToChk = seats.Where(seat => seatsToBook.Any(book => book.ToEntity(SeatState.Free).Equals(seat)));
+      var seatsToChk = seats.Where(seat => seatsToBook.Any(book => book.ToEntity(SeatState.Reserved).Equals(seat)));
       if (seatsToChk.Count() != seatsToBook.Count())
         throw new Exception("Seats Not Available!");
 
@@ -54,7 +54,7 @@ namespace CqrsMovie.Seats.Domain.Entities
     {
       foreach (var seatBooked in @event.Seats)
       {
-        var seat = seats.FirstOrDefault(s => s.Equals(seatBooked.ToEntity(SeatState.Free)));
+        var seat = seats.FirstOrDefault(s => s.Equals(seatBooked.ToEntity(SeatState.Reserved)));
         seats.Remove(seat);
         seats.Add(new Seat(seat.Row, seat.Number, SeatState.Booked));
       }
@@ -65,7 +65,7 @@ namespace CqrsMovie.Seats.Domain.Entities
     internal void ReserveSeat(DailyProgrammingId aggregateId, IEnumerable<Messages.Dtos.Seat> seatsToReserve)
     {
       // Chk for seats availability
-      var seatsToChk = seats.Where(seat => seatsToReserve.Any(book => book.ToEntity(SeatState.Booked).Equals(seat)));
+      var seatsToChk = seats.Where(seat => seatsToReserve.Any(book => book.ToEntity(SeatState.Free).Equals(seat)));
       if (seatsToChk.Count() != seatsToReserve.Count())
         throw new Exception("Unable to reserve seats. Already taken");
 
@@ -74,9 +74,9 @@ namespace CqrsMovie.Seats.Domain.Entities
 
     private void Apply(SeatsReserved @event)
     {
-      foreach (var seatBooked in @event.Seats)
+      foreach (var seatReserved in @event.Seats)
       {
-        var seat = seats.FirstOrDefault(s => s.Equals(seatBooked.ToEntity(SeatState.Booked)));
+        var seat = seats.FirstOrDefault(s => s.Equals(seatReserved.ToEntity(SeatState.Free)));
         seats.Remove(seat);
         seats.Add(new Seat(seat.Row, seat.Number, SeatState.Reserved));
       }

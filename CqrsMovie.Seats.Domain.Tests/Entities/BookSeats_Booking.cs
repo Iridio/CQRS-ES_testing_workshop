@@ -21,6 +21,7 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
     private readonly string movieTitle = "rambo";
     private readonly string screenName = "screen 99";
     private readonly IEnumerable<Seat> seats;
+    private readonly IEnumerable<Seat> seatsToReserve;
     private readonly IEnumerable<Seat> seatsToBook;
 
     public BookSeats_Booking()
@@ -43,11 +44,19 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
           new Seat { Number = 2, Row = "B" },
           new Seat { Number = 3, Row = "B" }
       };
+
+      seatsToReserve = new List<Seat>
+      {
+        new Seat { Number = 1, Row = "B" },
+        new Seat { Number = 2, Row = "B" },
+        new Seat { Number = 3, Row = "B" }
+      };
     }
 
     protected override IEnumerable<DomainEvent> Given()
     {
       yield return new DailyProgrammingCreated(aggregateId, movieId, screenId, dailyDate, seats, movieTitle, screenName);
+      yield return new SeatsReserved(aggregateId, seatsToReserve);
     }
 
     protected override BookSeats When()
