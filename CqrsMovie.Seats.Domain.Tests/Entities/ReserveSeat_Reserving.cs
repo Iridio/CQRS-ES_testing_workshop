@@ -12,7 +12,7 @@ using Muflone.SpecificationTests;
 
 namespace CqrsMovie.Seats.Domain.Tests.Entities
 {
-  public class ReserveSeat_Reserving : CommandSpecification<ReserveSeat>
+  public class ReserveSeat_Reserving : CommandSpecification<ReserveSeats>
   {
     private readonly DailyProgrammingId aggregateId = new DailyProgrammingId(Guid.NewGuid());
     private readonly MovieId movieId = new MovieId(Guid.NewGuid());
@@ -51,14 +51,14 @@ namespace CqrsMovie.Seats.Domain.Tests.Entities
       
     }
 
-    protected override ReserveSeat When()
+    protected override ReserveSeats When()
     {
-      return new ReserveSeat(aggregateId, seatsToReserve);
+      return new ReserveSeats(aggregateId, seatsToReserve);
     }
 
-    protected override ICommandHandler<ReserveSeat> OnHandler()
+    protected override ICommandHandler<ReserveSeats> OnHandler()
     {
-      return new ReserveSeatCommandHandler(Repository, new NullLoggerFactory());
+      return new ReserveSeatsCommandHandler(Repository, new NullLoggerFactory());
     }
 
     protected override IEnumerable<DomainEvent> Expect()

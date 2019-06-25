@@ -58,13 +58,13 @@ namespace CqrsMovie.Website.Controllers
     [HttpPost]
     public async Task<IActionResult> BookSeats()
     {
-      var seatsToBook = new List<Seat>
+      var seats = new List<Seat>
       {
           new Seat { Number = 1, Row = "B" },
           new Seat { Number = 2, Row = "B" },
           new Seat { Number = 3, Row = "B" }
       };
-      await serviceBus.Send(new BookSeats(new DailyProgrammingId(DailyProgramming1), seatsToBook));
+      await serviceBus.Send(new BookSeats(new DailyProgrammingId(DailyProgramming1), seats));
 
       ViewData["Message"] = "BookSeats commands sent";
       return RedirectToAction("Index");
@@ -73,7 +73,13 @@ namespace CqrsMovie.Website.Controllers
     [HttpPost]
     public async Task<IActionResult> ReserveSeats()
     {
-
+      var seats = new List<Seat>
+      {
+        new Seat { Number = 1, Row = "B" },
+        new Seat { Number = 2, Row = "B" },
+        new Seat { Number = 3, Row = "B" }
+      };
+      await serviceBus.Send(new ReserveSeats(new DailyProgrammingId(DailyProgramming1), seats));
 
       ViewData["Message"] = "ReserveSeats commands sent";
       return RedirectToAction("Index");

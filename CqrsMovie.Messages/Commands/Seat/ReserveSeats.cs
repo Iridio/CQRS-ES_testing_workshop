@@ -4,11 +4,11 @@ using Muflone.Messages.Commands;
 
 namespace CqrsMovie.Messages.Commands.Seat
 {
-    public class ReserveSeat : Command
+    public class ReserveSeats : Command
     {
         public IEnumerable<Dtos.Seat> Seats { get; }
 
-        public ReserveSeat(IDomainId aggregateId, IEnumerable<Dtos.Seat> seats) 
+        public ReserveSeats(IDomainId aggregateId, IEnumerable<Dtos.Seat> seats) 
             : base(aggregateId)
         {
             Seats = seats;

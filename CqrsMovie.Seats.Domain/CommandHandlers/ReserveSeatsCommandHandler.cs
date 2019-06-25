@@ -8,13 +8,13 @@ using Muflone.Persistence;
 
 namespace CqrsMovie.Seats.Domain.CommandHandlers
 {
-  public class ReserveSeatCommandHandler : CommandHandler<ReserveSeat>
+  public class ReserveSeatsCommandHandler : CommandHandler<ReserveSeats>
   {
-    public ReserveSeatCommandHandler(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
+    public ReserveSeatsCommandHandler(IRepository repository, ILoggerFactory loggerFactory) : base(repository, loggerFactory)
     {
     }
 
-    public override async Task Handle(ReserveSeat command)
+    public override async Task Handle(ReserveSeats command)
     {
       try
       {
